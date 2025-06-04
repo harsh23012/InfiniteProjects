@@ -1,0 +1,55 @@
+package com.carrent.com.serv.customer;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.carrent.com.dao.CustomerDao;
+import com.carrent.com.dao.CustomerDaoImpl;
+import com.carrent.com.model.Customer;
+
+/**
+ * Servlet implementation class addCustomerServlet
+ */
+@WebServlet("/addCustomerServlet")
+public class addCustomerServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public addCustomerServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html");
+		Customer customerDetails = new Customer();
+		customerDetails.setFirstName(request.getParameter("firstName"));
+		customerDetails.setLastName(request.getParameter("lastName"));
+		customerDetails.setEmail(request.getParameter("email"));
+		customerDetails.setPhoneNumber(request.getParameter("phoneNumber"));
+		
+		CustomerDao dao = new CustomerDaoImpl();
+		
+		dao.addCustomer(customerDetails);
+	}
+
+}

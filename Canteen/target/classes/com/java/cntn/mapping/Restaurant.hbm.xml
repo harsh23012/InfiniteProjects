@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.java.cntn.model.Restaurant" table="restaurant">
+        
+        <!-- Primary key -->
+        <id name="restaurantId" column="restaurantId">
+            <generator class="increment"/>
+        </id>
+
+        <!-- Simple fields -->
+        <property name="restaurantName" column="restaurantName" type = "java.lang.String"/>
+        <property name="city" column="city" type = "java.lang.String"/>
+        <property name="rating" column="rating" type="double"/>
+
+        <!-- Enum or custom type field -->
+        <property name="foodType">
+            <column name="FOODTYPE" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.java.cntn.model.FoodType</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+		
+        <!-- One-to-many relationship as List -->
+        <list name="menuList" cascade="all" inverse="true">
+		      <key column="RestaurantId"/>
+		      <list-index column="list_index"/>
+		      <one-to-many class="com.java.cntn.model.Menu"/>
+    	</list>
+    </class>
+    <query name="showRestaurant">
+        from Restaurant
+    </query>
+</hibernate-mapping>

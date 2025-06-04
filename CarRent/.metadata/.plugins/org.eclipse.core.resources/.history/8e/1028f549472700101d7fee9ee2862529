@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form method="get" action="carListServlet">
+        <center>
+            <h2>Car List</h2>
+
+            Which list You Want: <br>
+            <select name="status" required>
+                <option value="">-- Select Status --</option>
+                <option value="available">Available Cars</option>
+                <option value="notAvailable">Not Available Cars</option>
+            </select><br><br>
+        </center>
+    </form>
+
+</body>
+</html>

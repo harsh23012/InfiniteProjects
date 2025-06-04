@@ -1,0 +1,70 @@
+package com.carrent.com.serv.customer;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.carrent.com.dao.CustomerDao;
+import com.carrent.com.dao.CustomerDaoImpl;
+import com.carrent.com.exception.CustomerNotFoundException;
+
+/**
+ * Servlet implementation class removeCustomerServlet
+ */
+public class removeCustomerServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public removeCustomerServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doDelete(request, response);
+	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html");
+		
+		// Get the vehicle number from the form submission
+        int customerId = Integer.parseInt(request.getParameter("customerId")) ;
+
+        // Validate the input
+        if (customerId == 0) {
+            response.getWriter().write("Customer Id cannot be empty.");
+            return;
+        }
+
+        try {
+        	CustomerDao dao = new CustomerDaoImpl();
+			dao.removeCustomer(customerId);
+			out.println("*** Customer Deleted Successfully ***");
+		} catch (ClassNotFoundException | SQLException | CustomerNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			out.println("<b style='color:red;'>Error: " + e.getMessage() + "</b>");
+		}
+    }
+
+}

@@ -1,0 +1,67 @@
+package com.carrent.com.serv.cars;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.carrent.com.bal.CarBal;
+import com.carrent.com.exception.CarException;
+import com.carrent.com.model.VehStatus;
+import com.carrent.com.model.Vehicle;
+
+/**
+ * Servlet implementation class addCarServlet
+ */
+
+public class addCarServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    /**
+     * Default constructor. 
+     */
+    public addCarServlet() {
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html");
+		Vehicle vehicle = new Vehicle();
+		vehicle.setVehNumber(request.getParameter("vehNumber"));
+		vehicle.setVehMake(request.getParameter("make"));
+		vehicle.setVehModel(request.getParameter("model"));
+		vehicle.setVehYear(Integer.parseInt(request.getParameter("year")));
+		vehicle.setVehDailyRate(Integer.parseInt(request.getParameter("dailyRate")));
+		vehicle.setVehPassengerCapacity(Integer.parseInt(request.getParameter("passengerCapacity")));
+		vehicle.setVehEngineCapacity(Integer.parseInt(request.getParameter("engineCapacity")));
+		vehicle.setVehStatus(VehStatus.valueOf(request.getParameter("status")));
+		
+		CarBal car = new CarBal();
+//		CarDao car = new carDaoImpl();
+		try {
+			out.println(car.addCarBal(vehicle));
+		} catch (ClassNotFoundException | SQLException | CarException e) {
+			// TODO Auto-generated catch block
+			out.println("<b style='color:red;'>Error: "+e.getMessage()+"<b/>");
+			e.printStackTrace();
+		}
+
+	}
+
+}

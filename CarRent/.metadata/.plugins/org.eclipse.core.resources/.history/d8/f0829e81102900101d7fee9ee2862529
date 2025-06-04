@@ -1,0 +1,13 @@
+package com.carrent.com.dao;
+
+
+import java.sql.SQLException;
+
+import com.carrent.com.model.Lease;
+
+
+public interface LeaseDao {
+	void addLease(Lease lease) throws ClassNotFoundException, SQLException; 
+	double getDailyRateByVehicleId(int vehicleId) throws SQLException, ClassNotFoundException;
+	void recordPayment(Lease lease) throws SQLException, ClassNotFoundException;
+}

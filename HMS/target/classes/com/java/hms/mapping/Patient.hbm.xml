@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 14-Sep-2023, 3:38:07 pm by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+		 <class name="com.java.hms.model.Patient" table="PATIENT">
+		   		<id name="patientId" type="java.lang.String">
+		            <column name="patientId" />
+		            <generator class="assigned" />	
+		        </id>
+		        
+		        <property name="patientName" type="java.lang.String">
+		       	     <column name="patientName" />
+		        </property>
+		        
+				<property name="doctorId" type="java.lang.String">
+		       	     <column name="doctorId" />
+		        </property>
+		        
+		        <property name="dateOfBirth" type="java.sql.Date">
+		       	     <column name="dateOfBirth" />
+		        </property>
+		        
+		        <list name="medicalHistory" cascade="all" inverse="true">
+			      <key column="medId"/>
+			      <list-index column="list_index"/>
+			      <one-to-many class="com.java.hms.model.MedicalHistory"/>
+			    </list>
+		 </class>
+</hibernate-mapping>

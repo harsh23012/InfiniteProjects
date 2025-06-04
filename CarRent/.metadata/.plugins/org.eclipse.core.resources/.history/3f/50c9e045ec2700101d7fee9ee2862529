@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<center>
+		  <!-- Link to add vehicle page -->
+        <a href="AddVehicle.html">Add Vehicle</a><br><br>
+        
+        <!-- Link to remove vehicle page -->
+        <a href="RemoveVehicle.html">Remove Vehicle</a><br><br>
+	</center>
+
+
+</body>
+</html>

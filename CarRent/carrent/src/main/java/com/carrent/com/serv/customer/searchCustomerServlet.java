@@ -1,0 +1,77 @@
+package com.carrent.com.serv.customer;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.carrent.com.dao.CustomerDao;
+import com.carrent.com.dao.CustomerDaoImpl;
+import com.carrent.com.exception.CustomerNotFoundException;
+import com.carrent.com.model.Customer;
+
+/**
+ * Servlet implementation class searchCustomerServlet
+ */
+public class searchCustomerServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public searchCustomerServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int customerId =Integer.parseInt(request.getParameter("customerId"));
+	    response.setContentType("text/html");
+	    PrintWriter out = response.getWriter();
+	    
+	    CustomerDao dao = new CustomerDaoImpl();
+	    try {
+			List<Customer> customerList= dao.findCustomerById(customerId);
+			if(!customerList.isEmpty()) {
+				out.println("<center><h2>Customer List - Customer ID: " + customerId + "</h2><table border='1'>");
+		        out.println("<tr><th>ID</th><th>First Name</th><th>Last name</th><th>Email</th><th>Phone Number</th></tr>");
+
+		        for (Customer c : customerList) {
+		            out.println("<tr>");
+		            out.println("<td>" + c.getCustId() + "</td>");
+		            out.println("<td>" + c.getFirstName() + "</td>");
+		            out.println("<td>" + c.getLastName() + "</td>");
+		            out.println("<td>" + c.getEmail() + "</td>");
+		            out.println("<td>" + c.getPhoneNumber() + "</td>");
+		            out.println("</tr>");
+		        }
+
+		        out.println("</table></center>");
+
+			}
+			
+			
+		} catch (ClassNotFoundException | SQLException | CustomerNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			out.println("<b style='color:red;'>Error: " + e.getMessage() + "</b>");
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

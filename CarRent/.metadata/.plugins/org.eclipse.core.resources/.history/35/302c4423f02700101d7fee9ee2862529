@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	 <center>
+        <h1>Welcome to Car Rental Service</h1>
+
+        <p>Click on the links below to manage vehicles:</p>
+        
+        <!-- Link to add vehicle page -->
+        <a href="AdminPage.html">Admin Portal</a><br><br>
+        
+        <!-- Link to remove vehicle page -->
+        <a href="UserPage.html">User Portal</a><br><br>
+        
+       
+    </center>
+
+</body>
+</html>

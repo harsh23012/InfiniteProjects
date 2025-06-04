@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form method="post" action="showPaymentHistoryByCustId">
+        <center>
+            <h2>Payment History of Customer</h2>
+
+            Customer Id: <br>
+            <input type="number" name="customerId" required /><br><br>
+            <input type="submit" value="Remove Customer" />
+        </center>
+    </form>
+
+</body>
+</html>

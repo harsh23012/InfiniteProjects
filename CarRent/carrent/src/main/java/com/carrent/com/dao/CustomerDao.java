@@ -1,0 +1,17 @@
+package com.carrent.com.dao;
+
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.carrent.com.exception.CustomerNotFoundException;
+import com.carrent.com.model.Customer;
+
+
+public interface CustomerDao {
+	void addCustomer(Customer customer) throws SQLException, ClassNotFoundException;
+	void removeCustomer(int customerId) throws ClassNotFoundException, SQLException, CustomerNotFoundException;
+	List<Customer> findCustomerById(int customerId) throws SQLException, ClassNotFoundException, CustomerNotFoundException;
+	List<Customer> listCustomers() throws ClassNotFoundException, SQLException, CustomerNotFoundException;
+
+}

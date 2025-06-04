@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method="get" action="showActiveLeaseServlet">
+        <center>
+            <h2>List of Active Lease</h2><br>
+            <input type="submit" value="Show Active Lease" />
+        </center>
+    </form>
+</body>
+</html>

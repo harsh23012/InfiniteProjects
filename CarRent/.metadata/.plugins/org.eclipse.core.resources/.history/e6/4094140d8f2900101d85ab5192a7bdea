@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method="post" action="addLeaseServlet">
+        <center>
+            <h2>Lease a Car</h2>
+
+            Vehicle Id: <br>
+            <input type="number" name="vehId" required /><br><br>
+
+            Customer Id: <br>
+            <input type="number" name="custId" required /><br><br>
+
+            Lease Type: <br>
+            <select name="leaseType" required>
+                <option value="">-- Select Type --</option>
+                <option value="DailyLease">Daily</option>
+                <option value="MonthlyLeasee">Monthly</option>
+            </select><br><br>
+            
+            Start date: <br>
+            <input type="date" name="startDate" required /><br><br>
+
+            End Date: <br>
+            <input type="date" name="endDate" required /><br><br>
+            
+
+            <input type="submit" value="Lease Car" />
+        </center>
+    </form>
+</body>
+</html>

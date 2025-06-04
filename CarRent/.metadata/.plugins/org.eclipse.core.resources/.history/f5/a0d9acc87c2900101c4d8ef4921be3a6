@@ -1,0 +1,37 @@
+package com.carrent.com.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.carrent.com.model.Payment;
+import com.carrent.com.util.ConnectionHelper;
+
+public class PaymentDaoImpl implements PaymentDao{
+
+	Connection connection;
+	PreparedStatement psmt;
+	
+	@Override
+	public List<Payment> paymentDetailsCustomer(int custId) throws ClassNotFoundException, SQLException {
+		List<Payment> = new ArrayList<>();
+		connection = ConnectionHelper.getConnection();
+		String cmd = "Select * from Payment where custId=?";
+		psmt = connection.prepareStatement(cmd);
+		psmt.setInt(1, custId);
+		ResultSet rs = psmt.executeQuery();
+		
+		while(rs.next()) {
+			Payment payment = new Payment();
+			payment.setLeaseId(rs.getInt("leaseID"));
+			payment.setPaymentId(rs.getInt("paymentID"));
+			payment.setPaymentDate(rs.getDate("paymentDate"));
+			payment.setAmount(rs.getDouble("amount"));
+		}
+		
+	}
+
+}

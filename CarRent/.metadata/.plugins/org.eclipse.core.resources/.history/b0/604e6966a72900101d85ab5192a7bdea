@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method="post" action="PayDuesServlet">
+        <center>
+            <h2>Pay Dues And Return Car</h2>
+
+            Pay Dues: <br>
+            <input type="number" name="duesAmount" required /><br><br>
+            <input type="submit" value="Return Car" />
+        </center>
+    </form>
+</body>
+</html>

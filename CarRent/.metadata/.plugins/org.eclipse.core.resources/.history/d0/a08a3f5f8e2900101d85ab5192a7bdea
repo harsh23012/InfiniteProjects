@@ -1,0 +1,107 @@
+package com.carrent.com.model;
+
+import java.sql.Date;
+
+//CREATE TABLE Lease (
+//	    leaseID SERIAL PRIMARY KEY,
+//	    vehicleID INT REFERENCES Vehicle(vehicleID), -- ON DELETE CASCADE,
+//	    customerID INT REFERENCES Customer(customerID), -- ON DELETE CASCADE,
+//	    startDate DATE,
+//	    endDate DATE,
+//	    
+public class Lease {
+
+	private int leaseId;
+	private int vehId;
+	private int custId;
+	private Date startDate;
+	private Date endDate;
+	private LeaseType leaseType;
+	private int noOfMonths;
+	private int noOfDays;
+	private double amount;
+	
+	
+	public Lease(int leaseId, int vehId, int custId, Date startDate, Date endDate, LeaseType leaseType, int noOfMonths,
+			int noOfDays, double amount) {
+		super();
+		this.leaseId = leaseId;
+		this.vehId = vehId;
+		this.custId = custId;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.leaseType = leaseType;
+		this.noOfMonths = noOfMonths;
+		this.noOfDays = noOfDays;
+		this.amount = amount;
+	}
+
+
+	public int getNoOfMonths() {
+		return noOfMonths;
+	}
+	public void setNoOfMonths(int noOfMonths) {
+		this.noOfMonths = noOfMonths;
+	}
+	public int getNoOfDays() {
+		return noOfDays;
+	}
+	public void setNoOfDays(int noOfDays) {
+		this.noOfDays = noOfDays;
+	}
+	public double getAmount() {
+		return amount;
+	}
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	public int getLeaseId() {
+		return leaseId;
+	}
+	public void setLeaseId(int leaseId) {
+		this.leaseId = leaseId;
+	}
+	public int getVehId() {
+		return vehId;
+	}
+	public void setVehId(int vehId) {
+		this.vehId = vehId;
+	}
+	public int getCustId() {
+		return custId;
+	}
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public LeaseType getLeaseType() {
+		return leaseType;
+	}
+	public void setLeaseType(LeaseType leaseType) {
+		this.leaseType = leaseType;
+	}
+
+	@Override
+	public String toString() {
+		return "Lease [leaseId=" + leaseId + ", vehId=" + vehId + ", custId=" + custId + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", leaseType=" + leaseType + ", noOfMonths=" + noOfMonths + ", noOfDays="
+				+ noOfDays + ", amount=" + amount + "]";
+	}
+
+
+	public Lease() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+}

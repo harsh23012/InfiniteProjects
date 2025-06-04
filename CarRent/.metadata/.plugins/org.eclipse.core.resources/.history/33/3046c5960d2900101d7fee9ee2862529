@@ -1,0 +1,28 @@
+package com.carrent.com.dao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.carrent.com.model.Lease;
+import com.carrent.com.util.ConnectionHelper;
+
+public class LeaseDaoImpl implements LeaseDao{
+
+	Connection connection;
+	PreparedStatement psmt;
+
+	public void addLease(Lease lease) throws ClassNotFoundException, SQLException {
+		connection = ConnectionHelper.getConnection();
+		String cmd = "Insert into vehicleLease(vehicleID, customerID, startDate, endDate, noOfMonths, noOfDays, type) values(?,?,?,?,?,?,?)";
+		psmt = connection.prepareStatement(cmd);
+		psmt.setInt(1, lease.getVehId());
+		psmt.setInt(2, lease.getCustId());
+		psmt.setDate(3, lease.getStartDate());
+		psmt.setDate(4, lease.getEndDate());
+		psmt.setInt(0, 0);
+		psmt.setString(7, lease.getLeaseType().toString());
+		psmt.executeUpdate();
+	}
+	
+}

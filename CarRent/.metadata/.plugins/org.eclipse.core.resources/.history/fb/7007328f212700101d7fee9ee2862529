@@ -1,0 +1,6 @@
+package com.carrent.com.exception;
+
+public class vehicleNotFoundException {
+	
+
+}

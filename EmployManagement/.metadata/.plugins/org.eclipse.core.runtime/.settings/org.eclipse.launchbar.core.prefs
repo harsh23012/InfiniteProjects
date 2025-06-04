@@ -1,0 +1,10 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.wst.server,WildFly\ 9.x/name=WildFly 9.x
+configDescList=org.jboss.tools.wtp.server.launchbar.ModuleDescriptorType\:EmployEjbJdbc,org.jboss.tools.wtp.server.launchbar.ModuleDescriptorType\:,org.jboss.tools.wtp.server.launchbar.ModuleDescriptorType\:/EmployDaoTable.jsf,org.jboss.tools.wtp.server.launchbar.ModuleDescriptorType\:JsfEjbClient,org.eclipse.launchbar.core.descriptorType.default\:WildFly 9.x,org.jboss.tools.wtp.server.launchbar.ModuleDescriptorType\:HibJsf
+eclipse.preferences.version=1
+org.eclipse.launchbar.core.descriptorType.default\:WildFly\ 9.x/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.jboss.tools.wtp.server.launchbar.ModuleDescriptorType\:EmployEjbJdbc/activeLaunchTarget=null\:---
+org.jboss.tools.wtp.server.launchbar.ModuleDescriptorType\:JsfEjbClient/activeLaunchMode=run
+org.jboss.tools.wtp.server.launchbar.ModuleDescriptorType\:JsfEjbClient/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.wst.server\:WildFly 9.x

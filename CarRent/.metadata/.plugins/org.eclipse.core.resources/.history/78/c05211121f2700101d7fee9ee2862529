@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form method="post" action="removeCarServlet">
+        <center>
+            <h2>Remove Car</h2>
+
+            Vehicle Number: <br>
+            <input type="text" name="vehNumber" required /><br><br>
+
+            <input type="submit" value="Remove Car" />
+        </center>
+    </form>
+</body>
+</html>

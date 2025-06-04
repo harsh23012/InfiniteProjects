@@ -1,0 +1,30 @@
+package com.carrent.com.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import com.carrent.com.model.Vehicle;
+import com.carrent.com.util.ConnectionHelper;
+
+public class carDaoImpl implements CarDao{
+
+	Connection connection;
+	PreparedStatement psmt;
+
+	@Override
+	public String addCar(Vehicle vehicle) throws ClassNotFoundException, SQLException {
+		String cmd = "Insert into Vehicle(vehicleID, vehicleNumber, make, model, year, dailyRate, status, passengerCapacity, engineCapacity) values(?,?,?,?,?,?,?,?,?)";
+		connection = ConnectionHelper.getConnection();
+		psmt.setInt(1, vehicle.getVehId());
+		psmt.setString(2, vehicle.getVehNumber());
+		psmt.setString(3, vehicle.getVehMake());
+		psmt.setString(4, vehicle.getVehModel());
+		psmt.setInt(5, vehicle.getVehYear());
+		psmt.setDouble(6, vehicle.getVehDailyRate());
+		psmt.setString(7, vehicle.getVehStatus().toString());
+		psmt.setInt(8, vehicle.getVehPassengerCapacity());
+		psmt.setInt(9, vehicle.getVehEngineCapacity());
+	}
+
+}

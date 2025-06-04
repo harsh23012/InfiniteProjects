@@ -1,0 +1,80 @@
+package com.carrent.com.bal;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+
+import com.carrent.com.model.Lease;
+
+public class LeaseBal {
+	static StringBuilder sb = new StringBuilder();
+	
+	public void addLeaseBal(Lease lease) {
+		
+	}
+	
+	public static boolean validateLease(Lease lease) {
+		boolean isValid = true;
+		Date startDate = truncateTime(lease.getStartDate());
+		Date endDate = truncateTime(lease.getEndDate());
+		Date today = truncateTime(new Date(System.currentTimeMillis()));
+		
+		if(startDate.before(today)) {
+			sb.append("Lease start date cannot be before today.");
+			isValid = false;
+		}
+		if(endDate.before(today)) {
+			sb.append("Lease end date cannot be before today.");
+			isValid = false;
+		}
+		if(startDate.after(endDate)) {
+			sb.append("Lease start date cannot be after lease end date.");
+			isValid = false;
+		}
+		
+	}
+	
+	public void calculateDurationAndAmount(double dailyRate, Date startDate, Date endDate) {
+		
+		Lease leaseDetails = new Lease();
+	    if (startDate == null || endDate == null || endDate.before(startDate)) {
+	        throw new IllegalArgumentException("Invalid start or end date");
+	    }
+
+	    LocalDate start = startDate.toLocalDate();
+	    LocalDate end = endDate.toLocalDate();
+
+	    int totalDays = 0;
+	    int months = 0;
+	    LocalDate current = start;
+
+	    // Count full months and total days
+	    while (current.plusMonths(1).isBefore(end) || current.plusMonths(1).isEqual(end)) {
+	        YearMonth ym = YearMonth.from(current);
+	        totalDays += ym.lengthOfMonth(); // actual number of days in this month
+	        months++;
+	        current = current.plusMonths(1);
+	    }
+
+	    // Remaining days after full months
+	    int days = (int) ChronoUnit.DAYS.between(current, end);
+	    totalDays += days;
+
+	    leaseDetails.setNoOfDays(days);
+	    leaseDetails.setNoOfMonths(months);
+	}
+
+	
+	private static Date truncateTime(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return new java.sql.Date(cal.getTimeInMillis());
+	}
+
+}

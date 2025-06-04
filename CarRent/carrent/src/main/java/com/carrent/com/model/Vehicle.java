@@ -1,0 +1,91 @@
+package com.carrent.com.model;
+
+
+public class Vehicle {
+	private int vehId;
+	private String vehNumber;
+	private String vehMake;
+	private String vehModel;
+	private int vehYear;
+	private double vehDailyRate;
+	private VehStatus VehStatus;
+	private int vehPassengerCapacity;
+	private int vehEngineCapacity;
+	public int getVehId() {
+		return vehId;
+	}
+	public void setVehId(int vehId) {
+		this.vehId = vehId;
+	}
+	public String getVehNumber() {
+		return vehNumber;
+	}
+	public void setVehNumber(String vehNumber) {
+		this.vehNumber = vehNumber;
+	}
+	public String getVehMake() {
+		return vehMake;
+	}
+	public void setVehMake(String vehMake) {
+		this.vehMake = vehMake;
+	}
+	public String getVehModel() {
+		return vehModel;
+	}
+	public void setVehModel(String vehModel) {
+		this.vehModel = vehModel;
+	}
+	public int getVehYear() {
+		return vehYear;
+	}
+	public void setVehYear(int vehYear) {
+		this.vehYear = vehYear;
+	}
+	public double getVehDailyRate() {
+		return vehDailyRate;
+	}
+	public void setVehDailyRate(double vehDailyRate) {
+		this.vehDailyRate = vehDailyRate;
+	}
+	public VehStatus getVehStatus() {
+		return VehStatus;
+	}
+	public void setVehStatus(VehStatus vehStatus) {
+		VehStatus = vehStatus;
+	}
+	public int getVehPassengerCapacity() {
+		return vehPassengerCapacity;
+	}
+	public void setVehPassengerCapacity(int vehPassengerCapacity) {
+		this.vehPassengerCapacity = vehPassengerCapacity;
+	}
+	public int getVehEngineCapacity() {
+		return vehEngineCapacity;
+	}
+	public void setVehEngineCapacity(int vehEngineCapacity) {
+		this.vehEngineCapacity = vehEngineCapacity;
+	}
+	@Override
+	public String toString() {
+		return "VehicleModel [vehId=" + vehId + ", vehNumber=" + vehNumber + ", vehMake=" + vehMake + ", vehModel="
+				+ vehModel + ", vehYear=" + vehYear + ", vehDailyRate=" + vehDailyRate + ", VehStatus=" + VehStatus
+				+ ", vehPassengerCapacity=" + vehPassengerCapacity + ", vehEngineCapacity=" + vehEngineCapacity + "]";
+	}
+	public Vehicle(int vehId, String vehNumber, String vehMake, String vehModel, int vehYear, double vehDailyRate,
+			com.carrent.com.model.VehStatus vehStatus, int vehPassengerCapacity, int vehEngineCapacity) {
+		super();
+		this.vehId = vehId;
+		this.vehNumber = vehNumber;
+		this.vehMake = vehMake;
+		this.vehModel = vehModel;
+		this.vehYear = vehYear;
+		this.vehDailyRate = vehDailyRate;
+		VehStatus = vehStatus;
+		this.vehPassengerCapacity = vehPassengerCapacity;
+		this.vehEngineCapacity = vehEngineCapacity;
+	}
+	public Vehicle() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+}

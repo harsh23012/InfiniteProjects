@@ -1,0 +1,5 @@
+package com.carrent.com.exception;
+
+public class LeaseNotFoundException {
+
+}

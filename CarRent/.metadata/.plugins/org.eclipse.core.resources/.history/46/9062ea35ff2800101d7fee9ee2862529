@@ -1,0 +1,10 @@
+package com.carrent.com.dao;
+
+import java.rmi.dgc.Lease;
+
+import com.carrent.com.model.Vehicle;
+
+public interface LeaseDao {
+	String addLease(Lease lease); 
+
+}

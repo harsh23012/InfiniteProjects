@@ -1,0 +1,68 @@
+package com.carrent.com.model;
+
+import java.sql.Date;
+
+public class Payment {
+	
+	private int paymentId;
+	private int leaseId;
+	private Date paymentDate;
+	private double amount;
+	private double advAmount;
+	private double remainingAmount;
+	public double getRemainingAmount() {
+		return remainingAmount;
+	}
+	public void setRemainingAmount(double remainingAmount) {
+		this.remainingAmount = remainingAmount;
+	}
+	public double getAdvAmount() {
+		return advAmount;
+	}
+	public void setAdvAmount(double advAmount) {
+		this.advAmount = advAmount;
+	}
+	public int getPaymentId() {
+		return paymentId;
+	}
+	public void setPaymentId(int paymentId) {
+		this.paymentId = paymentId;
+	}
+	public int getLeaseId() {
+		return leaseId;
+	}
+	public void setLeaseId(int leaseId) {
+		this.leaseId = leaseId;
+	}
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+	public double getAmount() {
+		return amount;
+	}
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	@Override
+	public String toString() {
+		return "Payment [paymentId=" + paymentId + ", leaseId=" + leaseId + ", paymentDate=" + paymentDate + ", amount="
+				+ amount + "advAmount" + advAmount +"remainingAmount" + remainingAmount +"]";
+	}
+	public Payment(int paymentId, int leaseId, Date paymentDate, double amount, double advAmount, double remainingAmount) {
+		super();
+		this.paymentId = paymentId;
+		this.leaseId = leaseId;
+		this.paymentDate = paymentDate;
+		this.amount = amount;
+		this.advAmount = advAmount;
+		this.remainingAmount = remainingAmount;
+	}
+	public Payment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+}

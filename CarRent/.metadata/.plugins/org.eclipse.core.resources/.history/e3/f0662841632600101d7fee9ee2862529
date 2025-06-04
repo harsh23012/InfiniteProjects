@@ -1,0 +1,8 @@
+package com.carrent.com.dao;
+
+import com.carrent.com.model.Vehicle;
+
+public interface CarDao {
+
+	String addCar(Vehicle vehicle);
+}

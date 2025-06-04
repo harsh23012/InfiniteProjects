@@ -1,0 +1,13 @@
+package com.carrent.com.model;
+
+public class VehicleModel {
+	private int vehId;
+	private String vehNumber;
+	private String vehMake;
+	private String vehModel;
+	private int vehYear;
+	private boolean vehDailyRate;
+	private VehStatus VehStatus;
+	private int vehPassengerCapacity;
+	private int vehEngineCapacity;
+}

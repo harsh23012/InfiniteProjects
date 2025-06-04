@@ -1,0 +1,84 @@
+package com.carrent.com.serv.lease;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.carrent.com.dao.LeaseDao;
+import com.carrent.com.dao.LeaseDaoImpl;
+import com.carrent.com.model.Lease;
+
+/**
+ * Servlet implementation class showActiveLeaseServlet
+ */
+public class showLeaseServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public showLeaseServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    response.setContentType("text/html");
+	    PrintWriter out = response.getWriter();
+	    String activeOrAll = request.getParameter("activeOrAll");
+	    List<Lease> lease;
+	    try {
+	        LeaseDao dao = new LeaseDaoImpl(); 
+	        if(activeOrAll.equals("active")) {
+	        	lease = dao.listActiveLeases();
+	        }
+	        else {
+	        	lease = dao.listLeases();
+	        }
+
+	        if (lease.isEmpty()) {
+	            out.println("<h3> ***No active lease found*** </h3>");
+	            return;
+	        }
+	        out.println("<center><h2> Lease List </h2><table border='1'>");
+	        out.println("<tr><th>ID</th><th>Vehcile Id</th><th>Customer Id</th><th>Start Date</th><th>End Date</th><th>Type</th><th>No of Months</th><th>No of Days</th></tr>");
+
+	        for (Lease l : lease) {
+	            out.println("<tr>");
+	            out.println("<td>" + l.getLeaseId() + "</td>");
+	            out.println("<td>" + l.getVehId() + "</td>");
+	            out.println("<td>" + l.getCustId() + "</td>");
+	            out.println("<td>" + l.getStartDate() + "</td>");
+	            out.println("<td>" + l.getEndDate() + "</td>");
+	            out.println("<td>" + l.getLeaseType() + "</td>");
+	            out.println("<td>" + l.getNoOfMonths() + "</td>");
+	            out.println("<td>" + l.getNoOfDays() + "</td>");
+	            out.println("</tr>");
+	        }
+
+	        out.println("</table></center>");
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        out.println("<h3 style='color:red;'>Error fetching vehicles: " + e.getMessage() + "</h3>");
+	    }
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

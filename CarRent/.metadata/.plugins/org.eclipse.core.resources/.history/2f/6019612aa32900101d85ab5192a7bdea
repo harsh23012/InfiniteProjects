@@ -1,0 +1,31 @@
+package com.carrent.com.bal;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.carrent.com.dao.LeaseDao;
+import com.carrent.com.dao.LeaseDaoImpl;
+import com.carrent.com.dao.PaymentDao;
+import com.carrent.com.dao.PaymentDaoImpl;
+import com.carrent.com.model.Payment;
+
+public class PaymentBal {
+	
+	static StringBuilder sb = new StringBuilder();
+	static PaymentDao dao = new PaymentDaoImpl();
+	static LeaseDao leaseDao = new LeaseDaoImpl();
+	
+	public void payDuesBal(int LeaseId) throws ClassNotFoundException, SQLException {
+		L paymentList = dao.findLease(LeaseId);
+		payment.setRemainingAmount(calculateRemainingBalance(payment.getAmount(), payment.getAdvAmount()));
+		if(payment.getRemainingAmount() > 0) {
+			   
+		}
+		
+	}
+	
+	private double calculateRemainingBalance(double amount, double advPayment) {
+        return amount - advPayment;  // Remaining balance to be paid
+    }
+
+}

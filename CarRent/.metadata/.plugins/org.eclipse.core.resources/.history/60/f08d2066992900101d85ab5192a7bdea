@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method="post" action="returnCarServlet">
+        <center>
+            <h2>Return Car</h2>
+
+            Lease Id: <br>
+            <input type="number" name="leaseId" required /><br><br>
+            <input type="submit" value="Return Car" />
+        </center>
+    </form>
+</body>
+</html>

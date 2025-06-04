@@ -1,0 +1,75 @@
+package com.carrent.com.serv;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.carrent.com.model.Vehicle;
+
+/**
+ * Servlet implementation class carListServlet
+ */
+@WebServlet("/carListServlet")
+public class carListServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public carListServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String status = request.getParameter("status");
+	    response.setContentType("text/html");
+	    PrintWriter out = response.getWriter();
+
+	    if (status == null || status.isEmpty()) {
+	        out.println("<h3>Status must be selected.</h3>");
+	        return;
+	    }
+
+	    try {
+	        CarDao dao = new carDaoImpl();  // Your DAO implementation
+	        List<Vehicle> vehicles = dao.getCarsByStatus(status);
+
+	        out.println("<center><h2>Car List - Status: " + status + "</h2><table border='1'>");
+	        out.println("<tr><th>ID</th><th>Number</th><th>Make</th><th>Model</th><th>Year</th><th>Status</th><th>Passenger Capacity</th><th>Engine Capacity</th></tr>");
+
+	        for (Vehicle v : vehicles) {
+	            out.println("<tr>");
+	            out.println("<td>" + v.getVehId() + "</td>");
+	            out.println("<td>" + v.getVehNumber() + "</td>");
+	            out.println("<td>" + v.getVehMake() + "</td>");
+	            out.println("<td>" + v.getVehModel() + "</td>");
+	            out.println("<td>" + v.getVehYear() + "</td>");
+	            out.println("<td>" + v.getVehStatus() + "</td>");
+	            out.println("</tr>");
+	        }
+
+	        out.println("</table></center>");
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        out.println("<h3>Error fetching vehicles: " + e.getMessage() + "</h3>");
+	    }
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

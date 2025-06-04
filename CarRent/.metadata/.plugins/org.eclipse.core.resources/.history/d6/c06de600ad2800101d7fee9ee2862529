@@ -1,0 +1,46 @@
+package com.carrent.com.bal;
+
+import java.sql.SQLException;
+
+import com.carrent.com.dao.CarDao;
+import com.carrent.com.dao.carDaoImpl;
+import com.carrent.com.exception.CarException;
+import com.carrent.com.model.Vehicle;
+
+public class CarBal {
+	
+	static CarDao carDao = new carDaoImpl();
+	static StringBuilder sb = new StringBuilder();
+	
+	
+	public String addCarBal(Vehicle vehicleDetails) throws ClassNotFoundException, SQLException, CarException {
+		if(validateCar(vehicleDetails)) {
+			return carDao.addCar(vehicleDetails);
+		}
+		throw new CarException(sb.toString());
+		
+	}
+	
+	public static boolean validateCar(Vehicle vehicleDetails) {
+		boolean isValid = true;
+		int engineCapacity = vehicleDetails.getVehEngineCapacity();
+		int passengerCapacity = vehicleDetails.getVehPassengerCapacity();
+		if(vehicleDetails.getVehYear() < 2005 || vehicleDetails.getVehYear() > java.time.Year.now().getValue()) {
+			sb.append("Your Vehicle is not compatible for renting because of Year...");
+			isValid = false;
+		}
+		if(engineCapacity < 50 || engineCapacity > 8000) {
+			sb.append("Your Vehicle is not compatible because engine capacity requirement is not fullfilled....");
+			isValid = false;
+		}
+		
+		if(passengerCapacity <= 1 || passengerCapacity > 10) {
+			sb.append("Your Vehicle is not compatible because Passenger Capacity requirement is not fullfilled....");
+			isValid = false;
+		}
+		
+		return isValid;
+	}
+
+	
+}

@@ -1,0 +1,13 @@
+package com.carrent.com.dao;
+
+import java.rmi.dgc.Lease;
+
+public class LeaseDaoImpl implements LeaseDao{
+
+	@Override
+	public String addLease(Lease lease) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

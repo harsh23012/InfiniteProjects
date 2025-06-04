@@ -1,0 +1,135 @@
+package com.carrent.com.bal;
+
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+
+import com.carrent.com.dao.LeaseDao;
+import com.carrent.com.dao.LeaseDaoImpl;
+import com.carrent.com.dao.PaymentDao;
+import com.carrent.com.dao.PaymentDaoImpl;
+import com.carrent.com.exception.LeaseException;
+import com.carrent.com.model.Lease;
+import com.carrent.com.model.LeaseType;
+
+public class LeaseBal {
+	static StringBuilder sb = new StringBuilder();
+	static LeaseDao dao = new LeaseDaoImpl();
+	static PaymentDao paymentDao = new PaymentDaoImpl();
+	
+	public String extendLeaseBal(int leaseId, Date newEndDate) throws ClassNotFoundException, SQLException {
+	    Lease lease = dao.findLeaseById(leaseId); // You'll need to add this method in LeaseDao
+	    if (lease == null) {
+	        throw new SQLException("Lease not found with ID: " + leaseId);
+	    }
+
+	    // Validate: new end date must be after current end date
+	    if (!newEndDate.after(lease.getEndDate())) {
+	        throw new SQLException("New end date must be after the current end date.");
+	    }
+
+	    // Recalculate duration
+	    LocalDate start = lease.getStartDate().toLocalDate();
+	    LocalDate end = newEndDate.toLocalDate();
+
+	    calculateDurationAndAmount(lease);
+
+	    // Update lease object
+	    lease.setEndDate(newEndDate);
+	    lease.setLeaseType(lease.getNoOfMonths() > 0 ? Enum.valueOf(LeaseType.class, "MonthlyLease") : Enum.valueOf(LeaseType.class, "DailyLease"));
+
+	    // Call DAO to update the database
+	    dao.extendLease(lease.getLeaseId(), lease.getEndDate()); // Pass the updated Lease object
+
+	    // Update amount in payment
+	    paymentDao.updatePaymentAmount(leaseId, lease.getAmount());
+
+	    return "Lease extended successfully. New amount: " + lease.getAmount();
+	}
+	
+	public void addLeaseBal(Lease lease) throws ClassNotFoundException, SQLException, LeaseException {
+		calculateDurationAndAmount(lease);
+		if(validateLease(lease)) {
+			dao.addLease(lease);
+		}
+		else {
+			throw new LeaseException(sb.toString());
+		}
+	}
+	
+	public static boolean validateLease(Lease lease) throws ClassNotFoundException, SQLException {
+		boolean isValid = true;
+		Date startDate = truncateTime(lease.getStartDate());
+		Date endDate = truncateTime(lease.getEndDate());
+		Date today = truncateTime(new Date(System.currentTimeMillis()));
+		
+		if(startDate.before(today)) {
+			sb.append("Lease start date cannot be before today.");
+			isValid = false;
+		}
+		if(endDate.before(today)) {
+			sb.append("Lease end date cannot be before today.");
+			isValid = false;
+		}
+		if(startDate.after(endDate)) {
+			sb.append("Lease start date cannot be after lease end date.");
+			isValid = false;
+		}
+		
+		if (dao.customerHasActiveLease(lease.getCustId())) {
+            sb.append("Customer already has an active lease.\n");
+            isValid = false;
+        }
+		
+		
+		return isValid;
+		
+	}
+	
+	public void calculateDurationAndAmount(Lease lease) throws ClassNotFoundException, SQLException {
+		double dailyRate = dao.getDailyRateByVehicleId(lease.getVehId());
+		Date startDate = lease.getStartDate();
+		Date endDate = lease.getEndDate();
+	    if (startDate == null || endDate == null || endDate.before(startDate)) {
+	        throw new IllegalArgumentException("Invalid start or end date");
+	    }
+
+	    LocalDate start = startDate.toLocalDate();
+	    LocalDate end = endDate.toLocalDate();
+
+	    int totalDays = 0;
+	    int months = 0;
+	    LocalDate current = start;
+
+	    // Count full months and total days
+	    while (current.plusMonths(1).isBefore(end) || current.plusMonths(1).isEqual(end)) {
+	        YearMonth ym = YearMonth.from(current);
+	        totalDays += ym.lengthOfMonth(); // actual number of days in this month
+	        months++;
+	        current = current.plusMonths(1);
+	    }
+
+	    // Remaining days after full months
+	    int days = (int) ChronoUnit.DAYS.between(current, end);
+	    totalDays += days;
+
+	    lease.setNoOfDays(days);
+	    lease.setNoOfMonths(months);
+	    lease.setAmount(totalDays * dailyRate);
+	}
+
+	
+	private static Date truncateTime(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return new java.sql.Date(cal.getTimeInMillis());
+	}
+
+}

@@ -1,0 +1,66 @@
+package com.carrent.com.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.carrent.com.model.Customer;
+import com.carrent.com.model.VehStatus;
+import com.carrent.com.model.Vehicle;
+import com.carrent.com.util.ConnectionHelper;
+
+public class CustomerDaoImpl implements CustomerDao{
+
+	Connection connection;
+	PreparedStatement psmt;
+	
+	@Override
+	public void addCustomer(Customer customer) throws SQLException, ClassNotFoundException {
+		connection = ConnectionHelper.getConnection();
+		String cmd = "Insert into Customer(firstName, lastName, email, phoneNumber) values(?,?,?,?)";
+		psmt = connection.prepareStatement(cmd);
+		psmt.setString(1, customer.getFirstName());
+		psmt.setString(2, customer.getLastName());
+		psmt.setString(3, customer.getEmail());
+		psmt.setString(4, customer.getPhoneNumber());
+		
+		psmt.executeUpdate();
+		System.out.println("Customer Added Successfully...");
+	}
+
+	@Override
+	public void removeCustomer(int customerId) {
+		connection = ConnectionHelper.getConnection();
+		String cmd = "Delete from Customer where customerID = ?";
+		
+	}
+	
+	public List<Customer> findCustomerById(int customerId) throws SQLException, ClassNotFoundException {
+		 List<Vehicle> vehicleList = new ArrayList<>();
+			String cmd = "Select * from vehicle where vehicleID=?";
+			connection = ConnectionHelper.getConnection();
+			psmt = connection.prepareStatement(cmd);
+			psmt.setInt(1, vehId);
+			ResultSet rs = psmt.executeQuery();
+			 while(rs.next()) {
+			        Vehicle vehicle = new Vehicle();
+			        vehicle.setVehId(rs.getInt("vehicleID"));
+			        vehicle.setVehNumber(rs.getString("vehicleNumber"));
+			        vehicle.setVehMake(rs.getString("make"));
+			        vehicle.setVehModel(rs.getString("model"));
+			        vehicle.setVehYear(rs.getInt("year"));
+			        vehicle.setVehDailyRate(rs.getInt("dailyRate"));
+			        vehicle.setVehStatus(VehStatus.valueOf(rs.getString("status")));
+			        vehicle.setVehPassengerCapacity(rs.getInt("passengerCapacity"));
+			        vehicle.setVehEngineCapacity(rs.getInt("engineCapacity"));
+			        vehicleList.add(vehicle); 
+			    } 
+			 return vehicleList;
+	}
+
+	
+
+}

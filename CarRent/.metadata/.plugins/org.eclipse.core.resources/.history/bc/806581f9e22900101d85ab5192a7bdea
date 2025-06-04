@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<center>
+	
+		<h1>Welcome to Car Rental Service</h1>
+
+        <p>Click on the links below :</p>
+        
+		 <!-- Link to search vehicle page -->
+        <a href="SearchVehicle.html">Search Vehicle</a><br><br>
+        
+        <!-- Link to list of available vehicle page -->
+        <a href="AvailVehicle.html">Vehicle Lists</a><br><br>
+        
+        <!-- Link to lease vehicle -->
+        <a href="LeaseCar.html">Lease Car</a><br><br>
+        
+        <!-- Link to return vehicle -->
+        <a href="ReturnCar.html">Return Car</a><br><br>
+        
+        <!-- Link to see Payment Details -->
+        <a href="PaymentDetailByCust.html">payment History</a><br><br>
+        
+        <!-- Link to Return leased car -->
+        <a href="ReturnCar.html">Return Car</a><br><br>
+        
+        <!-- Link to add Customer -->
+        <a href="AddCustomer.html">Register as Customer</a>
+        
+        
+	</center>
+</body>
+</html>

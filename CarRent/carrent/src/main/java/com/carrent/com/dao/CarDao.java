@@ -1,0 +1,15 @@
+package com.carrent.com.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.carrent.com.exception.vehicleNotFoundException;
+import com.carrent.com.model.Vehicle;
+
+public interface CarDao {
+
+	void addCar(Vehicle vehicle) throws ClassNotFoundException, SQLException;
+	void removeCar(String vehicleNumber) throws ClassNotFoundException, SQLException, vehicleNotFoundException;
+	List<Vehicle> listCar(String status) throws SQLException, ClassNotFoundException;
+	List<Vehicle> findCarById(int vehId) throws SQLException, ClassNotFoundException;
+}

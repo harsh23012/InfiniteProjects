@@ -1,0 +1,69 @@
+package com.carrent.com.serv.lease;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.carrent.com.bal.CarBal;
+import com.carrent.com.bal.LeaseBal;
+import com.carrent.com.exception.CarException;
+import com.carrent.com.exception.LeaseException;
+import com.carrent.com.model.Lease;
+import com.carrent.com.model.LeaseType;
+import com.carrent.com.model.VehStatus;
+import com.carrent.com.model.Vehicle;
+
+/**
+ * Servlet implementation class addLeaseServlet
+ */
+public class addLeaseServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public addLeaseServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html");
+		Lease lease = new Lease();
+		lease.setVehId(Integer.parseInt((request.getParameter("vehId"))));
+		lease.setCustId(Integer.parseInt((request.getParameter("custId"))));
+		lease.setStartDate(Date.valueOf(request.getParameter("startDate")));
+		lease.setEndDate(Date.valueOf(request.getParameter("endDate")));
+		lease.setLeaseType(LeaseType.valueOf(request.getParameter("leaseType")));
+		
+		
+		LeaseBal bal = new LeaseBal();
+		try {
+			bal.addLeaseBal(lease);
+			out.println("<b> ***Lease Applied Successfully*** <b/>");
+		} catch (ClassNotFoundException | SQLException | LeaseException e) {
+			// TODO Auto-generated catch block
+			out.println("<b style='color:red;'>Error: "+e.getMessage()+"<b/>");
+			e.printStackTrace();
+		}
+	}
+
+}

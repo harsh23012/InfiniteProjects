@@ -1,0 +1,142 @@
+package com.carrent.com.dao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.carrent.com.model.Lease;
+import com.carrent.com.model.LeaseType;
+import com.carrent.com.util.ConnectionHelper;
+
+public class LeaseDaoImpl implements LeaseDao{
+
+	Connection connection;
+	PreparedStatement psmt;
+
+	public void addLease(Lease lease) throws ClassNotFoundException, SQLException {
+		connection = ConnectionHelper.getConnection();
+		String cmd = "Insert into Lease(vehicleID, customerID, startDate, endDate, noOfMonths, noOfDays, type) values(?,?,?,?,?,?,?)";
+		psmt = connection.prepareStatement(cmd, Statement.RETURN_GENERATED_KEYS);
+		psmt.setInt(1, lease.getVehId());
+		psmt.setInt(2, lease.getCustId());
+		psmt.setDate(3, lease.getStartDate());
+		psmt.setDate(4, lease.getEndDate());
+		psmt.setInt(5, lease.getNoOfMonths());
+		psmt.setInt(6, lease.getNoOfDays());
+		psmt.setString(7, lease.getLeaseType().toString());
+		psmt.executeUpdate();
+		
+		ResultSet rs = psmt.getGeneratedKeys();
+		   int leaseId = 0;
+		   if (rs.next()) {
+		      leaseId = rs.getInt(1);
+		   }
+		   lease.setLeaseId(leaseId);
+		
+		cmd = "UPDATE Vehicle SET status = 'notAvailable' WHERE vehicleID = ?";
+		psmt = connection.prepareStatement(cmd);
+		psmt.setInt(1, lease.getVehId());
+		psmt.executeUpdate();
+		
+		cmd = "Insert into payment(leaseId, paymentDate, amount, advAmount) values(?,?,?,?)";
+		psmt = connection.prepareStatement(cmd);
+		psmt.setInt(1, lease.getLeaseId());
+		psmt.setDate(2, lease.getEndDate());
+		psmt.setDouble(3, lease.getAmount());
+		psmt.setDouble(4, lease.getAdvAmount());
+		psmt.executeUpdate();
+	}
+	
+	public double getDailyRateByVehicleId(int vehicleId) throws SQLException, ClassNotFoundException {
+	    String cmd = "SELECT dailyRate FROM Vehicle WHERE vehicleID = ?";
+	    connection = ConnectionHelper.getConnection();
+	    psmt = connection.prepareStatement(cmd);
+	    psmt.setInt(1, vehicleId);
+	    ResultSet rs = psmt.executeQuery();
+
+	    if (rs.next()) {
+	        return rs.getDouble("dailyRate");
+	    } else {
+	        throw new SQLException("Vehicle with ID " + vehicleId + " not found.");
+	    }
+	}
+
+	@Override
+	public void returnCar(int leaseId) throws ClassNotFoundException, SQLException {
+		connection = ConnectionHelper.getConnection();
+		
+		String cmd = "Update lease set leaseActive = FALSE where leaseID = ?";
+		psmt = connection.prepareStatement(cmd);
+		psmt.setInt(1, leaseId);
+		psmt.executeUpdate();
+		
+	    cmd = "SELECT vehicleID FROM Lease WHERE leaseID = ?";
+	    psmt = connection.prepareStatement(cmd);
+	    psmt.setInt(1, leaseId);
+	    ResultSet rs = psmt.executeQuery();
+
+	    if (rs.next()) {
+	        int vehicleId = rs.getInt("vehicleID");
+	        cmd = "UPDATE Vehicle SET status = 'available' WHERE vehicleID = ?";
+	        psmt = connection.prepareStatement(cmd);
+	        psmt.setInt(1, vehicleId);
+	        psmt.executeUpdate();
+	    } else {
+	        throw new SQLException("Lease with ID " + leaseId + " not found.");
+	    }
+
+	}
+
+	@Override
+	public List<Lease> listActiveLeases() throws ClassNotFoundException, SQLException {
+		List<Lease> leaseList = new ArrayList<Lease>();
+		connection = ConnectionHelper.getConnection();
+		String cmd = "Select * from lease where leaseActive = 1";
+		psmt =connection.prepareStatement(cmd);
+		ResultSet rs =  psmt.executeQuery();
+		while(rs.next()) {
+			Lease lease = new Lease();
+			lease.setLeaseId(rs.getInt("leaseID"));
+	        lease.setVehId(rs.getInt("vehicleID"));
+	        lease.setCustId(rs.getInt("customerID"));
+	        lease.setStartDate(rs.getDate("startDate"));
+	        lease.setEndDate(rs.getDate("endDate"));
+	        lease.setNoOfMonths(rs.getInt("noOfMonths"));
+	        lease.setNoOfDays(rs.getInt("noOfDays"));
+	        lease.setLeaseType(Enum.valueOf(LeaseType.class, rs.getString("type")));
+	        
+	        leaseList.add(lease);
+		}
+		
+		return leaseList;
+	}
+
+	@Override
+	public List<Lease> listLeases() throws ClassNotFoundException, SQLException {
+		List<Lease> leaseList = new ArrayList<Lease>();
+		connection = ConnectionHelper.getConnection();
+		String cmd = "Select * from lease";
+		psmt =connection.prepareStatement(cmd);
+		ResultSet rs =  psmt.executeQuery();
+		while(rs.next()) {
+			Lease lease = new Lease();
+			lease.setLeaseId(rs.getInt("leaseID"));
+	        lease.setVehId(rs.getInt("vehicleID"));
+	        lease.setCustId(rs.getInt("customerID"));
+	        lease.setStartDate(rs.getDate("startDate"));
+	        lease.setEndDate(rs.getDate("endDate"));
+	        lease.setNoOfMonths(rs.getInt("noOfMonths"));
+	        lease.setNoOfDays(rs.getInt("noOfDays"));
+	        lease.setLeaseType(Enum.valueOf(LeaseType.class, rs.getString("type")));
+	        
+	        leaseList.add(lease);
+		}
+		
+		return leaseList;
+	}
+
+	
+}

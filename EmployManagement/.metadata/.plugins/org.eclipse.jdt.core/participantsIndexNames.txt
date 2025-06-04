@@ -1,0 +1,5 @@
+INDEX VERSION 1.134
+C:\JavaTraining\Day32_EjbJscCrud_Working\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2607204380.index
+\JsfEjbClient\src\main\java
+C:\JavaTraining\Day32_EjbJscCrud_Working\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2471426611.index
+\HibJsf\src\main\java

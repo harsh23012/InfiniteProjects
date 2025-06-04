@@ -1,0 +1,11 @@
+package com.carrent.com.dao;
+
+import java.sql.SQLException;
+
+import com.carrent.com.model.Vehicle;
+
+public interface CustomerDao {
+	void addCar(Vehicle vehicle) throws SQLException, ClassNotFoundException;
+	
+
+}

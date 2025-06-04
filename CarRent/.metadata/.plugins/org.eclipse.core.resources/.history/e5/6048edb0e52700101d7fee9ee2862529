@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method="get" action="searchVehicleServlet">
+        <center>
+            <h2>Search Car</h2>
+            
+            Vehicl Id: <br>
+            <input type="number" name="vehId" required /><br><br>
+            <input type="submit" value="Search Car" />
+        </center>
+    </form>
+</body>
+</html>

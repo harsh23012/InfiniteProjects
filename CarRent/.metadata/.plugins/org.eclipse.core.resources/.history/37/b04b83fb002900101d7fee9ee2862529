@@ -1,0 +1,11 @@
+package com.carrent.com.dao;
+
+import java.rmi.dgc.Lease;
+import java.sql.SQLException;
+
+import com.carrent.com.model.Vehicle;
+
+public interface LeaseDao {
+	String addLease(Lease lease) throws ClassNotFoundException, SQLException; 
+
+}

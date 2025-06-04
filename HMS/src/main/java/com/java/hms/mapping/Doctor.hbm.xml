@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 14-Sep-2023, 3:38:07 pm by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+		 <class name="com.java.hms.model.Doctor" table="DOCTOR">
+		   		<id name="doctorId" type="java.lang.String">
+		            <column name="doctorId" />
+		            <generator class="assigned" />	
+		        </id>
+		        
+		        <property name="doctorName" type="java.lang.String">
+		       	     <column name="doctorName" />
+		        </property>
+		        
+		       	<!-- Enum or custom type field -->
+		        <property name="specialization">
+		            <column name="SPECIALIZATION" />
+		            <type name="org.hibernate.type.EnumType">
+		                <param name="enumClass">com.java.hms.model.Specialization</param>
+		                <param name="type">12</param>
+		            </type>
+		        </property>
+		        
+				<property name="location" type="java.lang.String">
+		       	     <column name="location" />
+		        </property>
+		        
+		        <property name="mobileNo" type="java.lang.String">
+		       	     <column name="mobileNo" />
+		        </property>
+		        
+		        <property name="isStatus">
+		            <column name="ISSTATUS" />
+		            <type name="org.hibernate.type.EnumType">
+		                <param name="enumClass">com.java.hms.model.Status</param>
+		                <param name="type">12</param>
+		            </type>
+		        </property>
+		 </class>
+</hibernate-mapping>

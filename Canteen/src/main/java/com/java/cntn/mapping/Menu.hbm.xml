@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.java.cntn.model.Menu" table="menu">
+        
+        <id name="menuId" column="menuid">
+            <generator class="increment"/>
+        </id>
+        
+        <property name="itemName" column="item_name" type="java.lang.String"/>
+        <property name="rating" column="rating" type="double"/>
+        <property name="price" column="price" type="double"/>
+        
+        <!-- Many-to-one relationship back to Restaurant -->
+        <many-to-one name="restaurant" class="com.java.cntn.model.Restaurant" column="restaurant_id" not-null="true" />
+        
+    </class>
+</hibernate-mapping>

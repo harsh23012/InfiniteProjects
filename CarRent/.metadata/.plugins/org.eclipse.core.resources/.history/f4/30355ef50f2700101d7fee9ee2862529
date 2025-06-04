@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	 <form method="post" action="addCarServlet">
+        <center>
+            <h2>Add a New Car</h2>
+
+            Vehicle Number: <br>
+            <input type="text" name="vehNumber" required /><br><br>
+
+            Make: <br>
+            <input type="text" name="make" required /><br><br>
+
+            Model: <br>
+            <input type="text" name="model" required /><br><br>
+
+            Year: <br>
+            <input type="number" name="year" min="1900" max="2099" required /><br><br>
+
+            Color: <br>
+            <input type="text" name="color" required /><br><br>
+
+            Status: <br>
+            <select name="status" required>
+                <option value="">-- Select Status --</option>
+                <option value="available">Available</option>
+                <option value="notAvailable">Not Available</option>
+            </select><br><br>
+
+            <input type="submit" value="Add Car" />
+        </center>
+    </form>
+</body>
+</html>

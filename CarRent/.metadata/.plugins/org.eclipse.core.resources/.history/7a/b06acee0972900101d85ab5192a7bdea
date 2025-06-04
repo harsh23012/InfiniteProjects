@@ -1,0 +1,86 @@
+package com.carrent.com.dao;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.carrent.com.model.Payment;
+import com.carrent.com.util.ConnectionHelper;
+
+public class PaymentDaoImpl implements PaymentDao{
+
+	Connection connection;
+	PreparedStatement psmt;
+	
+	@Override
+	public List<Payment> paymentDetailsCustomer(int custId) throws ClassNotFoundException, SQLException {
+		List<Payment> paymentList= new ArrayList<>();
+		connection = ConnectionHelper.getConnection();
+		String cmd = "SELECT p.paymentID,p.paymentDate,p.amount,l.leaseID FROM Payment p JOIN Lease l ON p.leaseID = l.leaseID JOIN Customer c ON l.customerID = c.customerID WHERE c.customerID = ?";
+		psmt = connection.prepareStatement(cmd);
+		psmt.setInt(1, custId);
+		ResultSet rs = psmt.executeQuery();
+		
+		while(rs.next()) {
+			Payment payment = new Payment();
+			payment.setLeaseId(rs.getInt("leaseID"));
+			payment.setPaymentId(rs.getInt("paymentID"));
+			payment.setPaymentDate(rs.getDate("paymentDate"));
+			payment.setAmount(rs.getDouble("amount"));
+			paymentList.add(payment);
+		}
+		
+		return paymentList;
+		
+	}
+
+	@Override
+	public double totalRevenue() throws ClassNotFoundException, SQLException {
+		double totalRevenue = 0;
+		connection = ConnectionHelper.getConnection();
+		String cmd = "select sum(amount) from payment";
+		psmt = connection.prepareStatement(cmd);
+		ResultSet rs  = psmt.executeQuery();
+		if (rs.next()) {
+            totalRevenue = rs.getDouble(1);  // column index 1 = SUM(amount)
+        }
+		return totalRevenue;
+	}
+
+	@Override
+	public List<Payment> findLease(int leaseId) throws ClassNotFoundException, SQLException {
+		connection = ConnectionHelper.getConnection();
+		List<Payment> paymentList = ArrayList<>;
+		String cmd = "SELECT p.* FROM Payment p JOIN Lease l ON p.leaseID = l.leaseID WHERE p.leaseID = ? AND l.leaseActive = TRUE;";
+		psmt = connection.prepareStatement(cmd);
+		ResultSet rs = psmt.executeQuery();
+		if(rs.next()) {
+			Payment p = new Payment();
+			p.setPaymentId(rs.getInt("paymentID"));
+	        p.setLeaseId(rs.getInt("leaseID"));
+	        p.setAmount(rs.getDouble("amount")); // Total amount due
+	        p.setAdvAmount(rs.getDouble("advPayment")); // Advance payment
+	        p.setRemainingAmount(rs.getDouble("remainingPayment")); // Advance payment
+	        p.setPaymentDate(rs.getDate("paymentDate"));
+	        
+	        paymentList.add(p);
+		}
+		return paymentList;
+	}
+
+	@Override
+	public void payDues(double dues, int paymentId) throws ClassNotFoundException, SQLException {
+		connection = ConnectionHelper.getConnection();
+		String cmd = "Update payment set remainingAmount = ? where paymentID = ?";
+		psmt = connection.prepareStatement(cmd);
+		psmt.setDouble(1, dues);
+		psmt.setInt(2, paymentId);
+		psmt.executeQuery();
+		
+	}
+
+}

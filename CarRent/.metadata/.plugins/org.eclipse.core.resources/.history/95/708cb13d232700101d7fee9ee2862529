@@ -1,0 +1,59 @@
+package com.carrent.com.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.carrent.com.exception.vehicleNotFoundException;
+import com.carrent.com.model.Vehicle;
+import com.carrent.com.util.ConnectionHelper;
+
+public class carDaoImpl implements CarDao{
+
+	Connection connection;
+	PreparedStatement psmt;
+
+	@Override
+	public String addCar(Vehicle vehicle) throws ClassNotFoundException, SQLException {
+		String cmd = "Insert into Vehicle(vehicleNumber, make, model, year, dailyRate, status, passengerCapacity, engineCapacity) values(?,?,?,?,?,?,?,?)";
+		connection = ConnectionHelper.getConnection();
+		psmt = connection.prepareStatement(cmd);
+		psmt.setString(1, vehicle.getVehNumber());
+		psmt.setString(2, vehicle.getVehMake());
+		psmt.setString(3, vehicle.getVehModel());
+		psmt.setInt(4, vehicle.getVehYear());
+		psmt.setDouble(5, vehicle.getVehDailyRate());
+		psmt.setString(6, vehicle.getVehStatus().toString());
+		psmt.setInt(7, vehicle.getVehPassengerCapacity());
+		psmt.setInt(8, vehicle.getVehEngineCapacity());
+		
+		psmt.executeUpdate();
+		
+		return "Vehicle added successfully";
+		
+	}
+
+	@Override
+	public String removeCar(String vehicleNumber) throws ClassNotFoundException, SQLException, vehicleNotFoundException {
+		String cmd = "SELECT COUNT(*) FROM vehicle WHERE vehicleNumber = ?";
+		connection = ConnectionHelper.getConnection();
+		psmt = connection.prepareStatement(cmd);
+		psmt.setString(1, vehicleNumber);
+		ResultSet rs = psmt.executeQuery();
+		
+		if(!rs.next()) {
+			throw new vehicleNotFoundException("Vehicle with number " + vehicleNumber + " not found.");
+		}
+		else {
+			cmd = "Delete from vehicle where vehicleNumber = ?";
+			psmt = connection.prepareStatement(cmd);
+			psmt.setString(1, vehicleNumber);
+			
+			psmt.executeUpdate();
+			
+			return "Your vehicle is deleted from our Record....";
+		}
+	}
+
+}
