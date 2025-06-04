@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee /WEB-INF/schema/web-facesconfig_2_0.xsd" 
+              version="2.0" metadata-complete="false">
+    <!-- This file must be present with our jar, even if it is empty.  Otherwise, our Java annotations won't get scanned! -->
+<managed-bean>
+	<managed-bean-name>userBeanImpl</managed-bean-name>
+   <managed-bean-class>com.java.ejb.dao.UserBeanImpl</managed-bean-class>
+   <managed-bean-scope>request</managed-bean-scope>
+</managed-bean>
+<managed-bean>
+	<managed-bean-name>groupBeanImpl</managed-bean-name>
+   <managed-bean-class>com.java.ejb.dao.GroupBeanImpl</managed-bean-class>
+   <managed-bean-scope>request</managed-bean-scope>
+</managed-bean>
+<managed-bean>
+	<managed-bean-name>expenseBeanImpl</managed-bean-name>
+   <managed-bean-class>com.java.ejb.dao.ExpenseBeanImpl</managed-bean-class>
+   <managed-bean-scope>request</managed-bean-scope>
+</managed-bean>
+<managed-bean>
+	<managed-bean-name>user</managed-bean-name>
+   <managed-bean-class>com.java.ejb.model.User</managed-bean-class>
+   <managed-bean-scope>request</managed-bean-scope>
+</managed-bean>
+<managed-bean>
+	<managed-bean-name>tripGroup</managed-bean-name>
+   <managed-bean-class>com.java.ejb.model.TripGroup</managed-bean-class>
+   <managed-bean-scope>request</managed-bean-scope>
+</managed-bean>
+<managed-bean>
+	<managed-bean-name>expense</managed-bean-name>
+   <managed-bean-class>com.java.ejb.model.Expense</managed-bean-class>
+   <managed-bean-scope>request</managed-bean-scope>
+</managed-bean>
+</faces-config>
